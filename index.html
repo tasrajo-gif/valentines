@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajorshi ❤️ Nayana</title>
+<style>
+
+body{
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg,#ffdde1,#ee9ca7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+}
+
+.container{
+  width:100%;
+  max-width:400px;
+  padding:20px;
+  text-align:center;
+  position:relative;
+}
+
+.card{
+  background:white;
+  padding:25px 20px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+  position:relative;
+}
+
+h1{
+  color:#ff3f81;
+}
+
+button{
+  padding:12px 20px;
+  margin:10px;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.yes{
+  background:#ff3f81;
+  color:white;
+}
+
+.no{
+  background:#ddd;
+  position:absolute;
+}
+
+.hidden{
+  display:none;
+}
+
+/* Floating Hearts */
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh);}
+  100%{transform:translateY(-10vh);}
+}
+
+/* Envelope */
+.envelope{
+  width:200px;
+  height:120px;
+  background:#ff6b9c;
+  margin:20px auto;
+  position:relative;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.flap{
+  width:0;
+  height:0;
+  border-left:100px solid transparent;
+  border-right:100px solid transparent;
+  border-bottom:60px solid #ff3f81;
+  position:absolute;
+  top:-60px;
+  transition:0.8s;
+}
+
+.open .flap{
+  transform:rotateX(180deg);
+}
+
+.letter{
+  display:none;
+  margin-top:15px;
+  font-size:15px;
+  color:#444;
+}
+
+.letter img{
+  width:100%;
+  border-radius:15px;
+  margin-bottom:15px;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+}
+
+</style>
+</head>
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<audio id="bgMusic" loop>
+  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/CantinaBand60.wav" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+<div class="card" id="main">
+  <h1>Hey Nayana 💕</h1>
+  <p>Will you be my Valentine?</p>
+  <button class="yes" onclick="openLetter()">Yes 💖</button>
+  <button class="no" id="noBtn">No 😢</button>
+</div>
+
+<div class="card hidden" id="letterPage">
+  <h1>From Rajorshi ❤️</h1>
+  <div class="envelope" onclick="showLetter()" id="envelope">
+    <div class="flap"></div>
+  </div>
+  <div class="letter" id="letterText">
+
+    <img src="nayana.jpg">
+
+    Nayana,<br><br>
+    From the moment you came into my life,
+    everything feels brighter.
+    Your smile is my peace,
+    your eyes are my favorite universe.
+    <br><br>
+    I choose you. Always. 💞
+    <br><br>
+    — Rajorshi
+
+  </div>
+</div>
+
+</div>
+
+<script>
+
+// Moving No button
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseover", () => {
+  noBtn.style.left = Math.random()*250 + "px";
+  noBtn.style.top = Math.random()*300 + "px";
+});
+
+// Open letter + music + fireworks
+function openLetter(){
+  document.getElementById("main").classList.add("hidden");
+  document.getElementById("letterPage").classList.remove("hidden");
+  document.getElementById("bgMusic").play();
+  startFireworks();
+}
+
+function showLetter(){
+  document.getElementById("envelope").classList.add("open");
+  document.getElementById("letterText").style.display="block";
+}
+
+// Floating hearts
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML="💖";
+  heart.style.left=Math.random()*100+"vw";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
+}
+setInterval(createHeart,600);
+
+// Fireworks
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+function startFireworks(){
+  setInterval(()=>{
+    for(let i=0;i<30;i++){
+      ctx.beginPath();
+      ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, 3, 0, 2*Math.PI);
+      ctx.fillStyle="hsl("+Math.random()*360+",100%,50%)";
+      ctx.fill();
+    }
+  },200);
+}
+
+</script>
+
+</body>
+</html>
